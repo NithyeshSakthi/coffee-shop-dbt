@@ -1,0 +1,15 @@
+product_id,product_name,category,unit_price,is_active
+1,Espresso,coffee,2.50,true
+2,Latte,coffee,3.80,true
+3,Cappuccino,coffee,3.60,true
+4,Flat White,coffee,3.90,true
+5,Americano,coffee,3.00,true
+6,Mocha,coffee,4.20,true
+7,Cold Brew,coffee,3.70,false
+8,Green Tea,tea,2.80,true
+9,Chai Latte,tea,4.00,true
+10,Iced Tea,tea,3.10,true
+11,Croissant,pastry,2.90,true
+12,Blueberry Muffin,pastry,3.20,true
+13,Cheesecake Slice,pastry,4.50,true
+14,Cinnamon Roll,pastry,3.40,true
