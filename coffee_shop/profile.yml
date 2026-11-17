@@ -1,0 +1,14 @@
+coffee_shop:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: JJXSZYI-BC13671
+      user: dbt
+      role: TRANSFORM
+      database: COFFEE_SHOP
+      warehouse: COMPUTE_WH
+      schema: DEV
+      threads: 4
+      private_key_path: D:\2026job\DBT\coffeeshop_dbt\rsa_key.p8
+      private_key_passphrase: q
