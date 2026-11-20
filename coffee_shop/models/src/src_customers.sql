@@ -1,0 +1,13 @@
+WITH raw_customers AS (
+    SELECT * FROM COFFEE_SHOP.RAW.RAW_CUSTOMERS 
+    )
+SELECT 
+    CUSTOMER_ID,
+    FIRST_NAME,
+    LAST_NAME,
+    EMAIL,
+    CITY,
+    SIGNUP_DATE,
+    LOYALTY_TIER,
+    UPDATED_AT 
+FROM raw_customers
