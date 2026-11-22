@@ -1,0 +1,21 @@
+version: 2
+
+sources:
+  - name: raw
+    description: Raw source tables loaded from CSV file into Snowfalle
+    database: COFFEE_SHOP 
+    schema: RAW
+
+    tables:
+      - name: raw_customers
+        description: raw customer table
+      - name: raw_orders
+        description: added raw source file for orders
+      - name: raw_order_items
+        description: added order item validations
+      - name: raw_payments
+        description: added payment table source file
+      - name: raw_products
+        description: added pro source table
+      - name: raw_stores
+        description: added source store table
