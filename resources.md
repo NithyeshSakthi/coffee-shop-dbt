@@ -153,3 +153,78 @@ cte.duplicate_count
 FROM cte2
 CROSS JOIN cte
 
+----
+--- =========2. Staging scripts
+--- rename, cast, fix units, dedupe. Nobusiness logic, no joins across tables.
+
+--- customer table staging
+SELECT * FROM COFFEE_SHOP.RAW.RAW_CUSTOMERS
+SELECT 
+    customer_id,
+    INITCAP(trim(first_name)) first_name,
+    INITCAP(trim(last_name)) last_name,
+    nullif(lower(trim(email)), '') email,
+    INITCAP(trim(city)) city,
+    LOWER(TRIM(loyalty_tier)) loyalty_tier,
+    signup_date,
+    updated_at
+FROM COFFEE_SHOP.RAW.RAW_CUSTOMERS
+
+--- orders table
+
+WITH
+raw AS(
+    SELECT * FROM COFFEE_SHOP.RAW.RAW_ORDERS),
+stag AS
+    (SELECT 
+        order_id,
+        customer_id,
+        order_ts ::timestamp_ntz ordered_at, --- no time zone
+        LOWER(TRIM(status)) order_status,
+        trim(store) store_name
+    FROM raw)
+SELECT * FROM stag
+QUALIFY ROW_NUMBER() OVER(PARTITION BY order_id ORDER BY ordered_at DESC) =1
+
+
+--- payment
+SELECT * FROM COFFEE_SHOP.RAW.RAW_PAYMENTS
+SELECT 
+    payment_id,
+    order_id,
+    lower(trim(payment_method)) as payment_method,
+    amount_cents,
+    Round(amount_cents/100, 2) as amount,
+    created_at,
+FROM COFFEE_SHOP.RAW.RAW_PAYMENTS
+
+
+--- stores (create the surrogate key)
+SELECT 
+TRIM(store_name), 
+INITCAP(TRIM(city)) city,
+opened_date
+FROM 
+COFFEE_SHOP.RAW.RAW_STORES
+
+
+--- order_items keep qn as int  is_act as boolean
+SELECT * FROM COFFEE_SHOP.RAW.RAW_ORDER_ITEMS
+
+SELECT 
+    order_item_id::NUMBER AS order_item_id,
+    order_id::NUMBER AS order_id,
+    product_id::NUMBER as product_id,
+    quantity::INT as quantity
+FROM COFFEE_SHOP.RAW.RAW_ORDER_ITEMS
+
+-- SELECT 
+SELECT * FROM COFFEE_SHOP.RAW.RAW_PRODUCTS
+
+SELECT 
+    DISTINCT product_id, 
+    INITCAP(TRIM(product_name)) AS product_name ,
+    lower(TRIM(category)) AS category,
+    unit_price,
+    is_active::boolean AS is_active  ---is_act as boolean
+FROM COFFEE_SHOP.RAW.RAW_PRODUCTS

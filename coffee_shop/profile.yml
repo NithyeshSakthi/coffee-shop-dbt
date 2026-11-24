@@ -12,18 +12,3 @@ coffee_shop:
       threads: 4
       private_key_path: D:\2026job\DBT\coffeeshop_dbt\rsa_key.p8
       private_key_passphrase: q
-
-# packages.yml
-packages:
-  - package: dbt-labs/dbt_utils
-    version: [">=1.1.0", "<2.0.0"]
- 
--- macros/generate_schema_name.sql
--- if a model/seed asks for a schema (e.g. 'raw'), use it as written; otherwise use the target schema
-{% macro generate_schema_name(custom_schema_name, node) -%}
-    {%- if custom_schema_name is none -%}
-        {{ target.schema }}
-    {%- else -%}
-        {{ custom_schema_name | trim }}
-    {%- endif -%}
-{%- endmacro %}
