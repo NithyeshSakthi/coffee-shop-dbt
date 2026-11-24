@@ -1,12 +1,13 @@
 WITH
 cte1 AS
     (SELECT 
-        i.order_id,
+        i.order_id AS order_id,
         SUM(i.quantity) AS total_count,
         SUM(i.quantity * p.unit_price) AS items_total
     FROM {{ ref('stg_order_items')  }} i
     JOIN {{ ref('stg_products') }} p
-    ON i.product_id = p.product_id),
+    ON i.product_id = p.product_id
+    GROUP BY i.order_id),
 cte2 AS
     (SELECT 
         order_id,
