@@ -4,5 +4,6 @@ SELECT
     email,
     city,
     signup_date,
-    loyalty_tier
+    loyalty_tier,
+    updated_at
 FROM {{ ref('stg_customers') }}

@@ -10,4 +10,4 @@ stag AS
         trim(store) store_name
     FROM raword)
 SELECT * FROM stag
-QUALIFY ROW_NUMBER() OVER(PARTITION BY order_id ORDER BY ordered_at DESC) =1
+QUALIFY ROW_NUMBER() OVER(PARTITION BY order_id ORDER BY ordered_at DESC, customer_id DESC) =1

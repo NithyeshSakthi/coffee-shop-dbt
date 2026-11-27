@@ -1,5 +1,5 @@
 SELECT 
-    o.order_ID, 
+    o.order_id, 
     o.customer_id,
     s.store_key,
     o.ordered_at,
